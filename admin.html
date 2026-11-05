@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f3f5f0">
+  <title>Redaktion · Adventskalender GymHIP</title>
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/cards.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <!-- Anmeldung -->
+  <main class="login" id="login" hidden>
+    <form class="login__box" id="login-form" autocomplete="on">
+      <img src="assets/img/logo.png" alt="" width="64" height="64" class="login__logo">
+      <p class="eyebrow">Adventskalender</p>
+      <h1>Redaktion</h1>
+      <p class="login__lead">Hier befüllt das Kollegium die Türchen. Bitte mit dem gemeinsamen Passwort anmelden.</p>
+      <input type="text" name="username" autocomplete="username" hidden>
+      <label class="field">
+        <span class="field__label">Passwort</span>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </label>
+      <p class="login__error" id="login-error" role="alert"></p>
+      <button class="btn btn--primary btn--block" type="submit" id="login-btn">Anmelden</button>
+      <p class="login__demo" id="login-demo" hidden>Demo-Modus: Passwort <b>demo</b>. Änderungen bleiben nur in diesem Browser.</p>
+    </form>
+  </main>
+
+  <!-- Redaktion -->
+  <div class="app" id="app" hidden>
+    <header class="bar">
+      <div class="bar__brand">
+        <img src="assets/img/logo.png" alt="" width="36" height="36">
+        <div><p class="eyebrow">Adventskalender</p><p class="bar__title">Redaktion</p></div>
+      </div>
+      <div class="bar__actions">
+        <label class="season">
+          <span class="visually-hidden">Saison</span>
+          <select id="season"></select>
+        </label>
+        <a class="btn btn--ghost" href="./" target="_blank" rel="noopener">Kalender<span class="hide-sm">&nbsp;ansehen</span></a>
+        <button class="btn btn--ghost" type="button" id="logout">Abmelden</button>
+      </div>
+    </header>
+
+    <div class="demo-note" id="demo-note" hidden>
+      <span><b>Demo-Modus</b> – noch keine Datenbank verbunden. Alles wird nur in diesem Browser gespeichert.</span>
+      <button class="link" type="button" id="demo-reset">Beispieldaten zurücksetzen</button>
+    </div>
+
+    <main class="wrap">
+      <section class="overview">
+        <div class="panel stats" id="stats"></div>
+        <div class="panel status" id="status"></div>
+      </section>
+
+      <section class="panel tools">
+        <details id="settings">
+          <summary>Einstellungen</summary>
+          <form class="settings" id="settings-form">
+            <label class="field"><span class="field__label">Titel</span><input id="set-title" maxlength="40"></label>
+            <label class="field"><span class="field__label">Zeile über dem Titel</span><input id="set-subtitle" maxlength="60"></label>
+            <label class="switch"><input type="checkbox" id="set-music"><span class="switch__ui"></span><span>Musik-Knopf anzeigen</span></label>
+            <button class="btn btn--primary" type="submit">Einstellungen speichern</button>
+          </form>
+        </details>
+        <form class="preview-tool" id="preview-form">
+          <label class="field field--inline"><span class="field__label">Vorschau für Datum</span><input type="date" id="preview-date" required></label>
+          <button class="btn btn--secondary" type="submit">Kalender an diesem Tag ansehen</button>
+        </form>
+      </section>
+
+      <h2 class="section-title">Türchen</h2>
+      <section class="grid" id="grid" aria-label="Alle 24 Türchen"></section>
+    </main>
+  </div>
+
+  <!-- Bearbeiten -->
+  <div class="editor" id="editor" hidden>
+    <div class="editor__backdrop"></div>
+    <section class="editor__panel" role="dialog" aria-modal="true" aria-labelledby="ed-title">
+      <header class="editor__head">
+        <div>
+          <p class="eyebrow" id="ed-date"></p>
+          <h2 id="ed-title">Türchen</h2>
+        </div>
+        <button class="icon-btn" type="button" id="ed-close" aria-label="Schließen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+
+      <div class="editor__main">
+        <form class="editor__form" id="ed-form" novalidate>
+          <div class="seg" role="radiogroup" aria-label="Art des Inhalts">
+            <label><input type="radio" name="kind" value="card" checked><span>Karte mit Text</span></label>
+            <label><input type="radio" name="kind" value="link"><span>Link<span class="hide-sm">&nbsp;(Video, Podcast, Webseite)</span></span></label>
+          </div>
+
+          <fieldset class="only-card">
+            <legend class="field__label">Vorlage</legend>
+            <div class="templates" id="ed-templates"></div>
+          </fieldset>
+
+          <label class="field only-link">
+            <span class="field__label">Link</span>
+            <input type="url" id="ed-url" inputmode="url" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <span class="detect" id="ed-detect"></span>
+          </label>
+
+          <label class="field">
+            <span class="field__label"><span class="only-card">Überschrift</span><span class="only-link">Überschrift (optional)</span><span class="count" data-for="ed-heading"></span></span>
+            <input id="ed-heading" maxlength="80" placeholder="z. B. Tu dir mal was Gutes!">
+          </label>
+
+          <label class="field">
+            <span class="field__label"><span class="only-card">Text auf der Karte</span><span class="only-link">Begleittext (optional)</span><span class="count" data-for="ed-body"></span></span>
+            <textarea id="ed-body" rows="4" maxlength="600" placeholder="Was soll im Türchen stehen?"></textarea>
+            <span class="hint only-card">Am schönsten wirkt die Karte mit bis zu etwa 250 Zeichen – die Schrift passt sich automatisch an.</span>
+          </label>
+
+          <div class="row">
+            <label class="field">
+              <span class="field__label">Von (öffentlich, optional)</span>
+              <input id="ed-credit" maxlength="80" placeholder="z. B. Klasse 6c">
+            </label>
+            <label class="field">
+              <span class="field__label">Zuständig (nur intern)</span>
+              <input id="ed-assignee" maxlength="80" placeholder="z. B. Frau Müller">
+            </label>
+          </div>
+
+          <label class="switch switch--big">
+            <input type="checkbox" id="ed-published">
+            <span class="switch__ui"></span>
+            <span><b id="ed-pub-title">Fertig</b><br><small id="ed-pub-hint"></small></span>
+          </label>
+          <p class="editor__meta" id="ed-meta"></p>
+        </form>
+
+        <aside class="editor__preview">
+          <div class="preview-head">
+            <span class="field__label">Vorschau</span>
+            <div class="seg seg--small" role="radiogroup" aria-label="Gerät">
+              <label><input type="radio" name="device" value="phone"><span>iPhone</span></label>
+              <label><input type="radio" name="device" value="tablet" checked><span>iPad</span></label>
+            </div>
+          </div>
+          <div class="stage" id="ed-stage"><div class="stage__inner" id="ed-preview"></div></div>
+        </aside>
+      </div>
+
+      <footer class="editor__foot">
+        <button class="btn btn--danger-ghost" type="button" id="ed-clear">Türchen leeren</button>
+        <span class="spacer"></span>
+        <button class="btn btn--ghost" type="button" id="ed-cancel">Abbrechen</button>
+        <button class="btn btn--primary" type="button" id="ed-save">Speichern</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/common.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

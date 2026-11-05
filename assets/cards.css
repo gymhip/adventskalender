@@ -1,0 +1,188 @@
+/* =====================================================================
+   Schriften (lokal eingebunden – keine Google-Server, DSGVO-freundlich)
+   ===================================================================== */
+@font-face { font-family: "Fraunces"; src: url("fonts/fraunces-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fraunces"; src: url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fraunces"; src: url("fonts/fraunces-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Dancing Script"; src: url("fonts/dancing-script-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Caveat"; src: url("fonts/caveat-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+:root {
+  --f-sans: "Source Sans 3", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --f-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-script: "Dancing Script", "Snell Roundhand", "Segoe Script", cursive;
+  --f-hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+  --gold: #f0cd85;
+  --gold-deep: #c9a24c;
+}
+
+/* =====================================================================
+   Karten – Grundgerüst
+   ===================================================================== */
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
+  hyphens: manual;
+  -webkit-hyphens: manual;
+  container-type: inline-size;
+}
+.card.is-portrait { aspect-ratio: 4 / 5; }
+.card__bg, .card__deco { position: absolute; inset: 0; }
+.card__deco svg { width: 100%; height: 100%; display: block; }
+.card__frame {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+.card__heading { margin: 0; max-width: 100%; line-height: 1.12; font-weight: 600; flex: 0 0 auto; overflow: hidden; text-wrap: balance; }
+.card__text { text-wrap: pretty; }
+.card__heading span { display: inline; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.card__panel {
+  flex: 1 1 auto; min-height: 0; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.card__text { margin: 0; white-space: pre-line; overflow-wrap: break-word; max-width: 100%; }
+.card__credit { margin: 0; flex: 0 0 auto; opacity: .9; }
+.card__day { position: absolute; z-index: 2; font-family: var(--f-serif); font-weight: 600; line-height: 1; }
+
+/* ---------- Vorlage 1: Tannenzweig ---------------------------------- */
+.card.t1 .card__bg {
+  background:
+    radial-gradient(120% 90% at 50% 45%, rgba(255, 255, 255, .07), transparent 60%),
+    radial-gradient(60% 50% at 20% 80%, rgba(0, 0, 0, .12), transparent 70%),
+    linear-gradient(160deg, #5b7461 0%, #485f4d 55%, #3b4f40 100%);
+}
+.card.t1 .card__frame { padding: 5.5% 22% 5%; }
+.card.t1 .card__heading { color: #fff; font-family: var(--f-serif); }
+.card.t1 .card__heading span {
+  display: inline-block; max-width: 100%;
+  background: rgba(255, 255, 255, .2);
+  border-radius: .45em;
+  padding: .14em .7em .2em;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+  line-height: 1.15;
+}
+.card.t1 .card__panel { padding: 4% 0 2%; }
+.card.t1 .card__text {
+  font-family: var(--f-script); font-weight: 600; line-height: 1.12;
+  color: #fff8ea;
+  background: linear-gradient(180deg, #951d22, #7d151b);
+  padding: .32em .75em .42em;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(40, 0, 0, .35), inset 0 0 0 1px rgba(255, 220, 200, .18);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
+}
+.card.t1 .card__credit { color: #f2ead9; font-family: var(--f-sans); font-weight: 600; letter-spacing: .04em; }
+.card.t1 .card__day { display: none; }
+.card.t1.is-portrait .card__frame { padding: 27% 9% 21%; }
+
+/* ---------- Vorlage 2: Sternennacht -------------------------------- */
+.card.t2 .card__bg {
+  background:
+    radial-gradient(90% 70% at 50% 110%, rgba(120, 160, 230, .28), transparent 70%),
+    linear-gradient(180deg, #0e2246 0%, #16346a 62%, #1d4580 100%);
+}
+.card.t2 .card__frame { padding: 8.5% 13% 13%; }
+.card.t2 .card__frame::before {
+  content: ""; position: absolute; inset: 3.2%;
+  border: 1.5px solid rgba(240, 205, 133, .55); border-radius: 12px; pointer-events: none;
+}
+.card.t2 .card__heading {
+  font-family: var(--f-sans); font-weight: 600; text-transform: uppercase; letter-spacing: .2em;
+  color: var(--gold);
+}
+.card.t2 .card__heading::before, .card.t2 .card__heading::after { content: "✦"; font-size: .7em; margin: 0 .7em; opacity: .8; vertical-align: .12em; letter-spacing: 0; }
+.card.t2 .card__panel { padding: 3% 0; }
+.card.t2 .card__text { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: #f8f1e2; line-height: 1.3; text-shadow: 0 2px 12px rgba(0, 0, 0, .35); }
+.card.t2 .card__credit { color: var(--gold); font-family: var(--f-sans); letter-spacing: .08em; }
+.card.t2 .card__day { left: 6.5%; top: 6%; color: var(--gold); font-size: clamp(14px, 4.2cqw, 40px); opacity: .9; }
+.card.t2 { container-type: inline-size; }
+.card.t2.is-portrait .card__frame { padding: 19% 9% 22%; }
+.card.t2.is-portrait .card__day { top: 5%; left: 7%; }
+
+/* ---------- Vorlage 3: Winterpapier -------------------------------- */
+.card.t3 .card__bg {
+  background:
+    radial-gradient(70% 60% at 30% 30%, rgba(255, 255, 255, .7), transparent 70%),
+    radial-gradient(60% 60% at 80% 85%, rgba(214, 190, 150, .28), transparent 70%),
+    #f6eedf;
+}
+.card.t3 .card__frame { padding: 9% 16% 8.5%; }
+.card.t3 .card__frame::before, .card.t3 .card__frame::after { content: ""; position: absolute; pointer-events: none; border-radius: 10px; }
+.card.t3 .card__frame::before { inset: 2.6%; border: 2px solid #a8322d; }
+.card.t3 .card__frame::after { inset: calc(2.6% + 7px); border: 1px solid rgba(168, 50, 45, .45); }
+.card.t3 .card__heading { font-family: var(--f-serif); color: #a32b28; }
+.card.t3 .card__panel { padding: 2% 0; }
+.card.t3 .card__text { font-family: var(--f-hand); font-weight: 500; color: #24322a; line-height: 1.12; }
+.card.t3 .card__credit { font-family: var(--f-hand); color: #7a5b3e; }
+.card.t3 .card__day { right: 7%; top: 7%; color: #a8322d; font-size: clamp(14px, 5cqw, 46px); }
+.card.t3 { container-type: inline-size; }
+.card.t3.is-portrait .card__frame { padding: 23% 10% 21%; }
+
+/* =====================================================================
+   Link-Inhalte (Video, Podcast, Webseite)
+   ===================================================================== */
+.linkview { display: flex; flex-direction: column; gap: 14px; color: #f4efe6; text-align: center; width: 100%; }
+.linkview__heading { margin: 0; font-family: var(--f-serif); font-weight: 600; font-size: clamp(1.3rem, 4vw, 1.9rem); line-height: 1.15; color: #fff; }
+.linkview__text { margin: 0; font-size: 1.08rem; line-height: 1.5; white-space: pre-line; color: rgba(244, 239, 230, .88); }
+.linkview__credit { margin: 0; font-size: .92rem; color: var(--gold); letter-spacing: .04em; }
+.linkview__credit::before { content: "— "; }
+.linkview__image, .linkview__video { width: 100%; border-radius: 14px; display: block; background: #000; }
+.linkview__audio { width: 100%; }
+.linkview__invalid { padding: 1.5rem; border-radius: 14px; background: rgba(255, 255, 255, .06); }
+
+.embed { position: relative; width: 100%; border-radius: 14px; overflow: hidden; background: #08132a; box-shadow: 0 14px 40px rgba(0, 0, 0, .35); }
+.embed--portrait { max-width: 360px; margin: 0 auto; }
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.embed--fixed { border-radius: 12px; }
+
+.consent {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; text-align: center;
+  background:
+    radial-gradient(80% 80% at 50% 40%, rgba(240, 205, 133, .14), transparent 70%),
+    linear-gradient(160deg, #13284d, #0a1631);
+}
+.consent__play {
+  width: 68px; height: 68px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center;
+  background: var(--gold); color: #13284d;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .4), 0 0 0 8px rgba(240, 205, 133, .15);
+  transition: transform .2s ease;
+}
+.consent__play svg { width: 30px; height: 30px; }
+.consent__play:active { transform: scale(.94); }
+.consent__title { margin: 6px 0 0; font-weight: 600; font-size: 1.05rem; color: #fff; }
+.consent__note { margin: 0; font-size: .82rem; color: rgba(255, 255, 255, .7); max-width: 34ch; }
+.consent__remember { font-size: .8rem; color: rgba(255, 255, 255, .65); display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+.embed--fixed .consent { flex-direction: row; justify-content: flex-start; text-align: left; gap: 14px; }
+.embed--fixed .consent__play { width: 54px; height: 54px; flex: 0 0 auto; }
+.embed--fixed .consent__remember { display: none; }
+.embed--fixed .consent__title { margin: 0; }
+
+.webcard {
+  display: flex; align-items: center; gap: 16px; text-align: left;
+  padding: 18px 20px; border-radius: 16px; text-decoration: none; color: #fff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .05));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  transition: background .2s ease, transform .2s ease;
+}
+.webcard:active { transform: scale(.98); }
+.webcard__icon { width: 48px; height: 48px; flex: 0 0 auto; border-radius: 12px; display: grid; place-items: center; background: var(--gold); color: #13284d; }
+.webcard__icon svg { width: 26px; height: 26px; }
+.webcard__text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.webcard__host { font-weight: 600; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.webcard__cta { font-size: .9rem; color: rgba(255, 255, 255, .7); }
+.webcard__arrow { font-size: 1.4rem; color: var(--gold); }
+
+.door-empty { text-align: center; color: rgba(255, 255, 255, .8); padding: 3rem 1rem; font-size: 1.1rem; }
+.door-empty__star { font-size: 2.4rem; color: var(--gold); margin: 0 0 .5rem; }
