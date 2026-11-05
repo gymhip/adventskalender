@@ -17,8 +17,8 @@ window.ADVENT_CONFIG = {
   adminEmail: "adventskalender@gym-hip.de",
 
   // Rechtliche Links im Fußbereich (leer lassen = ausblenden)
-  impressumUrl: "",
-  datenschutzUrl: "",
+  impressumUrl: "https://www.gym-hip.de/cms/index.php/kontakt/55-impressum",
+  datenschutzUrl: "https://www.gym-hip.de/cms/index.php/kontakt/339-datenschutzerklaerung",
 
   // Hintergrundmusik (Datei in assets/ ablegen; fehlt sie, verschwindet der Knopf)
   musicFile: "assets/musik.mp3"
