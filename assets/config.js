@@ -9,8 +9,8 @@
    sein – geschützt wird über die Regeln in supabase/setup.sql.
    ===================================================================== */
 window.ADVENT_CONFIG = {
-  supabaseUrl: "",          // z. B. "https://abcdefgh.supabase.co"
-  supabaseAnonKey: "",      // anon- bzw. publishable-Key
+  supabaseUrl: "https://zevlnzrxqssknohenfhg.supabase.co/rest/v1/",          // z. B. "https://abcdefgh.supabase.co"
+  supabaseAnonKey: "sb_publishable_TBWw-qCYJq7b4SV9Mbd9eA_mNmEZJVB",      // anon- bzw. publishable-Key
 
   // Das gemeinsame Admin-Konto (muss in Supabase angelegt sein und
   // in supabase/setup.sql in der Funktion is_admin stehen).
