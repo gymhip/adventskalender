@@ -76,7 +76,9 @@
 
   /* ---------- Supabase (nur fetch, keine Bibliothek) --------------- */
   function supabaseApi() {
-    const base = C.supabaseUrl.replace(/\/+$/, "");
+    // Nur „https://xyz.supabase.co“ – versehentlich mitkopierte Pfade wie /rest/v1/ werden entfernt
+    let base = C.supabaseUrl.trim();
+    try { base = new URL(base).origin; } catch { base = base.replace(/\/+$/, ""); }
     const key = C.supabaseAnonKey;
 
     const session = () => lsGet(LS_SESSION);
@@ -116,7 +118,11 @@
           headers: { apikey: key, "Content-Type": "application/json" },
           body: JSON.stringify({ email: C.adminEmail, password }),
         });
-        if (!r.ok) throw new AuthError(r.status === 429 ? "Zu viele Versuche – bitte kurz warten." : "Passwort falsch.");
+        if (!r.ok) {
+          if (r.status === 429) throw new AuthError("Zu viele Versuche – bitte kurz warten.");
+          if (r.status === 400) throw new AuthError("Passwort falsch.");
+          throw new AuthError(`Keine Verbindung zur Datenbank (Fehler ${r.status}). Bitte die Supabase-Adresse in config.js prüfen.`);
+        }
         const j = await r.json();
         lsSet(LS_SESSION, { access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || Date.now() / 1000 + j.expires_in });
       },
