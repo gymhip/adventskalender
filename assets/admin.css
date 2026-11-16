@@ -211,6 +211,8 @@ legend { padding: 0; margin-bottom: 8px; }
 .detect--ok { color: var(--green); }
 .detect--web { color: var(--action-dark); }
 .detect--bad { color: var(--red); }
+.detect__warn { display: block; margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: #fff4d6; color: #6b4b00; font-weight: 400; line-height: 1.4; box-shadow: inset 3px 0 0 #f0b941; }
+.detect__warn b { font-weight: 700; }
 
 .preview-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
 .stage {

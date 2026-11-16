@@ -285,6 +285,10 @@
     if (!info) { det.textContent = ""; det.className = "detect"; }
     else if (info.kind === "invalid") { det.textContent = "✗ Das sieht nicht wie ein gültiger Link aus."; det.className = "detect detect--bad"; }
     else if (info.kind === "web") { det.textContent = `↗ Wird als Link-Karte zu ${info.host} angezeigt.`; det.className = "detect detect--web"; }
+    else if (info.provider === "YouTube") {
+      det.innerHTML = `✓ Erkannt: ${A.esc(info.label)} – wird direkt eingebettet.<span class="detect__warn"><b>Achtung:</b> YouTube kann vor oder während des Videos Werbung zeigen – das lässt sich nicht abschalten. Werbefrei sind Vimeo-Links oder eine eigene MP4-Datei.</span>`;
+      det.className = "detect detect--ok";
+    }
     else { det.textContent = `✓ Erkannt: ${info.label} – wird direkt eingebettet.`; det.className = "detect detect--ok"; }
     // Veröffentlichen
     const pub = $("ed-published").checked;
